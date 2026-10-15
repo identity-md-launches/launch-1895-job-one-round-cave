@@ -1,0 +1,25 @@
+{
+  "ancestor_sha256": "6a4df630111727e4bb5254af9dbcb034274e94617bc9677eceba614b2492d40c",
+  "wall": {
+    "path": "artifacts/line-4/wall-v9.png",
+    "format": "PNG",
+    "dimensions": [1254, 1254],
+    "bytes": 4087702,
+    "sha256": "2142b37c81b31bc856a9249dbcb90851790a9385fabd1f9570dc37d97d5e36b7"
+  },
+  "preview": {
+    "path": "dist/line-4/29.jpg",
+    "format": "JPEG",
+    "dimensions": [512, 512],
+    "bytes": 79909
+  },
+  "preservation": {
+    "changed_pixel_bounds": [1026, 799, 1213, 1020],
+    "changed_pixels_outside_mark": 0
+  },
+  "visual_review": {
+    "pepe": "wide mouth and heavy-lidded eyes are visible",
+    "hands": "both open hands show four fingers and one thumb",
+    "unmet_visual_requirements": []
+  }
+}

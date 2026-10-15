@@ -106,7 +106,7 @@ class OverloadTests(unittest.TestCase):
 
     def test_malformed_or_unsupported_references_fail_before_file_open(self):
         for reference in ('', ' bar(uint256)', 'bar( uint256)', 'bar(uint256 )',
-                          'bar(uint256,)', 'bar(,uint256)', 'bar((uint256))',
+                          'bar(uint256,)', 'bar(,uint256)',
                           'bar(uint7)', 'bar(uint[][])', 'bar(string[])',
                           'bar(uint[0])', 'bar(uint) returns (bool)', 'bar)(',
                           'bar\n', 'bar(\N{GREEK SMALL LETTER MU})',

@@ -1,0 +1,32 @@
+[
+  {
+    "type": "function",
+    "name": "put",
+    "inputs": [
+      {
+        "name": "record",
+        "type": "tuple",
+        "components": [
+          {"name": "id", "type": "uint256"},
+          {"name": "label", "type": "string"}
+        ]
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "get",
+    "inputs": [{"name": "id", "type": "uint256"}],
+    "outputs": [
+      {
+        "name": "record",
+        "type": "tuple",
+        "components": [
+          {"name": "id", "type": "uint256"},
+          {"name": "label", "type": "string"}
+        ]
+      }
+    ]
+  }
+]

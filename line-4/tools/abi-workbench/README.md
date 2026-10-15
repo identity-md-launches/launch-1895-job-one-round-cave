@@ -13,10 +13,10 @@ From the repository root:
 python3 -B -m unittest discover -s line-4/tools/abi-workbench -v
 ```
 
-This runs 62 regression tests, including the gathering's defect reports,
+This runs 68 regression tests, including the gathering's defect reports,
 all 32 integer widths, malformed output checks, and eight Keccak vectors
 independently obtained using `cast keccak` (Cast is not needed to run the tests).
-All 62 passed locally, including input-boundary, scalar-array, strict-return,
+All 68 passed locally, including input-boundary, scalar-array, strict-return,
 calldata-inspection and explicit-overload tests. The original demo also passed:
 
 ```sh
@@ -67,8 +67,10 @@ nonzero address/bytes padding, dynamic offsets into the head, missing tail
 padding, and nonzero dynamic padding. Direct `encode_value` calls now use the
 same type validation as the CLI.
 
-Tuples, nested arrays, arrays of `string` or dynamic `bytes`, events and fixed
-point are explicitly unsupported. Ambiguous bare function names are rejected;
+Nested tuples are supported, including dynamic tuple fields and tuples that
+contain the supported scalar arrays. Arrays of tuples, nested arrays, arrays of
+`string` or dynamic `bytes`, events and fixed point remain unsupported.
+Ambiguous bare function names are rejected;
 explicit signatures can select overloads as described below. The default decoder permits noncanonical tail layouts and surplus words for
 compatibility. Use `decode --strict` to require exact canonical re-encoding for
 the supported types; unsupported ABI types remain unsupported. ABI files are limited to 1 MiB before parsing. Argument JSON and ABI byte budgets are documented below. This is a
@@ -212,12 +214,38 @@ Selection compares the complete canonical input signature, not its four-byte
 hash. Duplicate canonical signatures are refused, even if parameter names or
 output types differ. An unsupported sibling overload does not prevent selecting
 a supported overload; unsupported inputs or outputs of the selected function
-still fail. This does not expand tuple/event support or authenticate an ABI,
-contract, chain, or execution result. Selector collisions can exist; choosing
+still fail. This does not add event support or authenticate an ABI, contract,
+chain, or execution result. Selector collisions can exist; choosing
 an explicit signature does not prove which function a contract implements.
 
-All 62 tests passed locally, including 12 new overload regressions covering
-the published calldata, all three CLI commands, alias equivalence, duplicate
-signatures, unsupported siblings, empty inputs, arrays, bounded references,
-and concise error exits without success output. The tool still uses only
-Python's standard library and works with no network or installed dependency.
+All 68 tests passed locally, including 12 overload regressions and six tuple
+tests. The overload checks cover published calldata, all three CLI commands,
+alias equivalence, duplicate signatures, unsupported siblings, empty inputs,
+arrays, bounded references, and concise error exits without success output.
+Tuple tests cover static and dynamic layouts, nested values, malformed offsets,
+explicit signatures and CLI behavior. The tool still uses only Python's
+standard library and works with no network or installed dependency.
+
+## Nested tuples (Pepe 29)
+
+The encoder and decoder now accept ABI `tuple` parameters with a `components`
+array in an ABI JSON file. Nested tuple components, static tuples inline in a
+head, dynamic tuple tails, and tuples containing previously supported scalar
+arrays are encoded and decoded recursively. Tuple values use nested JSON arrays
+in component order. Explicit function references can name tuple signatures;
+for example `put((uint256,string))`. Strict return decoding and canonical
+calldata inspection re-encode the complete tuple tree before accepting bytes.
+
+From the repository root, this command encodes a tuple containing an integer
+and a dynamic string:
+
+```sh
+python3 -B line-4/tools/abi-workbench/abi_workbench.py encode --abi line-4/tools/abi-workbench/tuple-example.json --function 'put((uint256,string))' --args '[[7,"hi"]]'
+```
+
+Tried locally: exit 0, selector `0x58b31d65`, and calldata beginning with the
+outer tuple offset `0x20`; inside the tuple the string offset is `0x40`. The
+six new standard-library tests check that layout, inline static tuples, nested
+tuple and array values, malformed offsets, explicit signatures, and CLI
+round-trips. Array-of-tuple inputs and nested arrays are still unsupported.
+No chain connection or dependency is needed.

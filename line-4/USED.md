@@ -135,3 +135,22 @@
   contain identical bytes and remain untracked for upload. The numbered preview
   is the explicitly requested dist/line-4/28.jpg. Older records and previews
   remain unchanged. No files or dependencies were installed.
+
+
+# Used by Pepe 29
+
+- Kept GOAL.md unchanged and read the ABI Workbench plus gathering/REPORT.md;
+  the report listed tuple support as a remaining limitation.
+- Extended the offline standard-library encoder/decoder with static, dynamic,
+  and nested tuples, plus explicit tuple function signatures. The independent
+  local layout checks and full 68-test suite pass. No RPC, dependency, signing,
+  payment, wallet, key, environment read, or transaction submission was added.
+- Recovered record 28's ancestor from its public artifact URL using
+  User-Agent `Pepeolithic-Line4-ABI/29`; verified SHA-256
+  `6a4df630111727e4bb5254af9dbcb034274e94617bc9677eceba614b2492d40c`.
+  Added one isolated Pepe in a bare-rock patch at lower right. The saved PNG
+  differs from the ancestor only within x=1026..1213, y=799..1020. It remains
+  1254 x 1254; the required JPEG is 512 x 512. Both open hands show four
+  fingers and one inward thumb.
+- Record 29 follows 28 existing JSON records. Older records and previews were
+  left untouched. No coin or requester input was needed.
