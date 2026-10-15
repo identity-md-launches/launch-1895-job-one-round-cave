@@ -1,0 +1,200 @@
+{
+  "initial_tests": {
+    "import-map": {
+      "passed": 12
+    },
+    "import-witness": {
+      "passed": 9
+    }
+  },
+  "regression_suites": [
+    {
+      "tool": "import-impact",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "line-3/tools/import-impact",
+        "-v"
+      ],
+      "exit": 0,
+      "output": "test_against_independent_forward_reachability (test_impact.ImpactTests.test_against_independent_forward_reachability) ... ok\ntest_cli_errors_have_no_partial_success_output (test_impact.ImpactTests.test_cli_errors_have_no_partial_success_output) ... ok\ntest_deep_chain_is_iterative (test_impact.ImpactTests.test_deep_chain_is_iterative) ... ok\ntest_diamond_shortest_path_and_direction (test_impact.ImpactTests.test_diamond_shortest_path_and_direction) ... ok\ntest_multiple_seeds_cycles_self_loops_and_order (test_impact.ImpactTests.test_multiple_seeds_cycles_self_loops_and_order) ... ok\ntest_original_example_preserves_issues_and_cycles (test_impact.ImpactTests.test_original_example_preserves_issues_and_cycles) ... ok\ntest_real_source_encoding_warnings_and_execution_trap (test_impact.ImpactTests.test_real_source_encoding_warnings_and_execution_trap) ... ok\ntest_unknown_and_empty_selection (test_impact.ImpactTests.test_unknown_and_empty_selection) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.206s\n\nOK\n"
+    },
+    {
+      "tool": "import-delta",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "line-3/tools/import-delta",
+        "-v"
+      ],
+      "exit": 0,
+      "output": "test_cli_determinism_and_statuses (test_delta.DeltaTests.test_cli_determinism_and_statuses) ... ok\ntest_cycle_and_edge_creation_then_removal (test_delta.DeltaTests.test_cycle_and_edge_creation_then_removal) ... ok\ntest_cycle_group_merge_is_reported_as_groups (test_delta.DeltaTests.test_cycle_group_merge_is_reported_as_groups) ... ok\ntest_encoding_namespace_and_relative_imports (test_delta.DeltaTests.test_encoding_namespace_and_relative_imports) ... ok\ntest_modules_entrypoints_and_source_relocation (test_delta.DeltaTests.test_modules_entrypoints_and_source_relocation) ... ok\ntest_nonstructural_changes_and_inert_source (test_delta.DeltaTests.test_nonstructural_changes_and_inert_source) ... ok\ntest_parse_and_dynamic_warnings_survive_identical_graph (test_delta.DeltaTests.test_parse_and_dynamic_warnings_survive_identical_graph) ... ok\ntest_parse_failure_does_not_hide_warning_behind_edge_removal (test_delta.DeltaTests.test_parse_failure_does_not_hide_warning_behind_edge_removal) ... ok\ntest_reject_outside_root_without_reading_it (test_delta.DeltaTests.test_reject_outside_root_without_reading_it) ... ok\n\n----------------------------------------------------------------------\nRan 9 tests in 0.131s\n\nOK\n"
+    },
+    {
+      "tool": "import-reach",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "line-3/tools/import-reach",
+        "-v"
+      ],
+      "exit": 0,
+      "output": "test_cli_rejects_roots_outside_workspace_and_unknown_modules (test_reach.ImportReachTests.test_cli_rejects_roots_outside_workspace_and_unknown_modules) ... ok\ntest_cli_status_and_json (test_reach.ImportReachTests.test_cli_status_and_json) ... ok\ntest_cycle_terminates_and_flags_remain_visible (test_reach.ImportReachTests.test_cycle_terminates_and_flags_remain_visible) ... ok\ntest_example_reaches_three_and_identifies_spare (test_reach.ImportReachTests.test_example_reaches_three_and_identifies_spare) ... ok\ntest_random_graphs_match_independent_set_search (test_reach.ImportReachTests.test_random_graphs_match_independent_set_search) ... ok\ntest_requires_known_start (test_reach.ImportReachTests.test_requires_known_start) ... ok\ntest_scanning_source_does_not_execute_it (test_reach.ImportReachTests.test_scanning_source_does_not_execute_it) ... ok\ntest_sorted_shortest_witness_and_explicit_seeds (test_reach.ImportReachTests.test_sorted_shortest_witness_and_explicit_seeds) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 0.517s\n\nOK\n"
+    },
+    {
+      "tool": "import-boundaries",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "line-3/tools/import-boundaries",
+        "-v"
+      ],
+      "exit": 0,
+      "output": "test_cli_json_status_and_text_evidence (test_boundaries.BoundaryTests.test_cli_json_status_and_text_evidence) ... ok\ntest_depth_changes_groups_without_losing_module_edges (test_boundaries.BoundaryTests.test_depth_changes_groups_without_losing_module_edges) ... ok\ntest_empty_tree_and_unknown_groups (test_boundaries.BoundaryTests.test_empty_tree_and_unknown_groups) ... ok\ntest_example_retains_exact_evidence_and_internal_edges (test_boundaries.BoundaryTests.test_example_retains_exact_evidence_and_internal_edges) ... ok\ntest_invalid_rules_and_depth_are_refused (test_boundaries.BoundaryTests.test_invalid_rules_and_depth_are_refused) ... ok\ntest_order_does_not_change_report (test_boundaries.BoundaryTests.test_order_does_not_change_report) ... ok\ntest_outside_root_is_rejected_before_mapper (test_boundaries.BoundaryTests.test_outside_root_is_rejected_before_mapper) ... ok\ntest_repeated_imports_keep_both_locations (test_boundaries.BoundaryTests.test_repeated_imports_keep_both_locations) ... ok\ntest_rule_is_directional_and_deduplicated (test_boundaries.BoundaryTests.test_rule_is_directional_and_deduplicated) ... ok\ntest_warnings_and_strict_status_are_preserved_without_execution (test_boundaries.BoundaryTests.test_warnings_and_strict_status_are_preserved_without_execution) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 0.140s\n\nOK\n"
+    },
+    {
+      "tool": "import-budget",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "line-3/tools/import-budget",
+        "-v"
+      ],
+      "exit": 0,
+      "output": "test_cli_strict_warning_and_refusal_envelopes (test_budget.BudgetTests.test_cli_strict_warning_and_refusal_envelopes) ... ok\ntest_depth_and_non_python_entries_are_bounded (test_budget.BudgetTests.test_depth_and_non_python_entries_are_bounded) ... ok\ntest_empty_tree_and_root_initializer_budget (test_budget.BudgetTests.test_empty_tree_and_root_initializer_budget) ... ok\ntest_encoding_collision_and_parse_warnings_survive (test_budget.BudgetTests.test_encoding_collision_and_parse_warnings_survive) ... ok\ntest_exact_file_and_byte_limits_accept_then_refuse (test_budget.BudgetTests.test_exact_file_and_byte_limits_accept_then_refuse) ... ok\ntest_growing_file_still_has_a_bounded_read (test_budget.BudgetTests.test_growing_file_still_has_a_bounded_read) ... ok\ntest_invalid_limits_and_outside_root_rejected_before_enumeration (test_budget.BudgetTests.test_invalid_limits_and_outside_root_rejected_before_enumeration) ... ok\ntest_io_failure_refuses_without_partial_map (test_budget.BudgetTests.test_io_failure_refuses_without_partial_map) ... ok\ntest_no_parsing_until_entire_collection_passes (test_budget.BudgetTests.test_no_parsing_until_entire_collection_passes) ... ok\ntest_nonregular_sources_are_not_opened (test_budget.BudgetTests.test_nonregular_sources_are_not_opened) ... ok\ntest_oversized_file_is_refused_before_read (test_budget.BudgetTests.test_oversized_file_is_refused_before_read) ... ok\ntest_real_example_matches_original_mapper (test_budget.BudgetTests.test_real_example_matches_original_mapper) ... ok\ntest_skip_directories_without_descending_and_skip_symlinks (test_budget.BudgetTests.test_skip_directories_without_descending_and_skip_symlinks) ... ok\ntest_snapshot_is_exact_and_requires_no_second_read (test_budget.BudgetTests.test_snapshot_is_exact_and_requires_no_second_read) ... ok\ntest_source_is_never_executed (test_budget.BudgetTests.test_source_is_never_executed) ... ok\n\n----------------------------------------------------------------------\nRan 15 tests in 0.203s\n\nOK\n"
+    }
+  ],
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "demonstrations": [
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "line-3/tools/import-witness/witness.py",
+        "line-3/tools/import-map/examples",
+        "--json"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "status": "complete",
+      "summary": {
+        "module_count": 4,
+        "local_edge_count": 3,
+        "cycle_count": 1,
+        "issue_count": 1,
+        "entrypoints": [
+          "main"
+        ],
+        "witness_count": 1
+      },
+      "error": null
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "line-3/tools/import-witness/witness.py",
+        "line-3/tools/import-map/examples",
+        "--json",
+        "--strict"
+      ],
+      "exit": 1,
+      "expected_exit": 1,
+      "status": "complete",
+      "summary": {
+        "module_count": 4,
+        "local_edge_count": 3,
+        "cycle_count": 1,
+        "issue_count": 1,
+        "entrypoints": [
+          "main"
+        ],
+        "witness_count": 1
+      },
+      "error": null
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "line-3/tools/import-witness/witness.py",
+        "line-3/tools/import-map/examples",
+        "--json",
+        "--max-files",
+        "1"
+      ],
+      "exit": 2,
+      "expected_exit": 2,
+      "status": "refused",
+      "summary": null,
+      "error": {
+        "type": "budget_exceeded",
+        "budget": "files",
+        "limit": 1,
+        "observed": 2,
+        "path": "pkg/helper.py"
+      }
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "line-3/tools/import-witness/witness.py",
+        "shared/import-drift",
+        "--json",
+        "--strict"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "status": "complete",
+      "summary": {
+        "module_count": 18,
+        "local_edge_count": 28,
+        "cycle_count": 0,
+        "issue_count": 0,
+        "entrypoints": [
+          "audit",
+          "bounded_snapshot",
+          "budget",
+          "checked_review",
+          "drift",
+          "handoff",
+          "impact",
+          "import_map",
+          "merge",
+          "patch",
+          "patch_review",
+          "reconcile",
+          "review",
+          "test_bounded_snapshot",
+          "test_checked_review",
+          "test_drift",
+          "test_handoff",
+          "test_patch_review"
+        ],
+        "witness_count": 0
+      },
+      "error": null
+    }
+  ]
+}

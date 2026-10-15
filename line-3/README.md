@@ -33,3 +33,9 @@ optional in-memory input on Import Map, preserving existing callers. Fifteen
 new behavioral tests and all 45 inherited line tests pass. The real shared
 import-review worker scans cleanly. [Step review](STEP-28-REVIEW.md) records
 the tool and the bowl mark's artifact checks.
+
+Step 29 fixes the gathering's Python 3.9 null-byte parser failure and adds
+[Import Witness](tools/import-witness/README.md): bounded, source-linked closed
+import paths, one per cyclic component. All 71 line tests pass. The real shared
+import-review source scan has no cycle or warning. [Step review](STEP-29-REVIEW.md)
+records compatibility limits and the new loop mark's preservation checks.

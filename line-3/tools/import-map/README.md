@@ -86,3 +86,14 @@ enumeration or source-file reads and produces the same report shape. The new
 this API. Existing `inspect(root)` calls and this tool's CLI are unchanged;
 they do not acquire implicit limits. The snapshot API expects trusted caller
 data and does not itself enforce budgets.
+
+## Step 29: portable null-byte failures
+
+Python 3.9's parser raises `ValueError` for null bytes; newer interpreters raise
+`SyntaxError`. Both now produce a `parse_error` issue while healthy files retain
+their edges. Other parser `ValueError`s still propagate. The compile-based
+regression accepts either exception only for the null-byte case. Two new tests
+exercise the legacy parser response and verify that unrelated errors remain
+visible. All 12 mapper tests passed on Python 3.12.3. The Python 3.9 behavior was
+simulated at the parser boundary; no Python 3.9 interpreter was available here.
+The existing example command and report schema are unchanged.

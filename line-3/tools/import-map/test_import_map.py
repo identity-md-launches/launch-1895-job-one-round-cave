@@ -6,6 +6,7 @@ from pathlib import Path
 import random
 import tempfile
 import unittest
+from unittest import mock
 
 import import_map
 
@@ -145,7 +146,7 @@ class MapperTests(unittest.TestCase):
         self.put('healthy.py', 'import helper\n')
         for name, source in cases.items():
             with self.subTest(name=name):
-                with self.assertRaises(SyntaxError):
+                with self.assertRaises((SyntaxError, ValueError) if name == 'null_byte' else SyntaxError):
                     compile(source, name + '.py', 'exec')
                 (self.root / (name + '.py')).write_bytes(source)
         report = import_map.inspect(self.root)
@@ -167,6 +168,25 @@ class MapperTests(unittest.TestCase):
         self.assertEqual(report['issues'], [])
         self.assertEqual(report['modules'][0]['imports'],
                          [{'line': 1, 'target': 'json', 'kind': 'external'}])
+
+    def test_python39_null_byte_valueerror_retains_healthy_edges(self):
+        real_parse = import_map.ast.parse
+        def legacy_parse(source, **kwargs):
+            if b'\x00' in source:
+                raise ValueError('source code string cannot contain null bytes')
+            return real_parse(source, **kwargs)
+        sources = {'bad.py': b'\x00', 'good.py': b'import helper\n', 'helper.py': b''}
+        with mock.patch.object(import_map.ast, 'parse', side_effect=legacy_parse):
+            report = import_map.inspect(self.root, source_bytes=sources)
+        self.assertEqual(report['edges'], [{'from': 'good', 'to': 'helper'}])
+        self.assertEqual(len(report['issues']), 1)
+        self.assertEqual(report['issues'][0]['type'], 'parse_error')
+        self.assertEqual(report['issues'][0]['path'], 'bad.py')
+
+    def test_unrelated_parser_valueerror_is_not_hidden(self):
+        with mock.patch.object(import_map.ast, 'parse', side_effect=ValueError('unexpected')):
+            with self.assertRaisesRegex(ValueError, 'unexpected'):
+                import_map.inspect(self.root, source_bytes={'good.py': b'import json\n'})
 
 
 if __name__ == '__main__':

@@ -1,0 +1,45 @@
+{
+  "ancestor_sha256": "3ec283818ad3b7afa5b5e3155154118d95044bb44a5726271ecbd55aa7178fc9",
+  "generated_sha256": "a2e4653e1bd29b8d3418dc437962d69871abf75eca9bac30af44c19fa65275be",
+  "png": {
+    "path": "artifacts/line-3/wall-v9.png",
+    "format": "PNG",
+    "mode": "RGB",
+    "dimensions": [
+      1254,
+      1254
+    ],
+    "bytes": 4000450,
+    "sha256": "e4997c233e6f7a26d6feea29f6f8b5c7a3d0d9fda1272109ede115261b2b54e6"
+  },
+  "jpeg": {
+    "path": "dist/line-3/29.jpg",
+    "format": "JPEG",
+    "dimensions": [
+      512,
+      512
+    ],
+    "bytes": 69208,
+    "sha256": "e0b5130c3f85dccb7355abcb17beb45645c971204e007469229559353c851bef"
+  },
+  "preservation": {
+    "rectangle": [
+      921,
+      1127,
+      1042,
+      1211
+    ],
+    "changed_pixels": 3015,
+    "changed_bounds": [
+      928,
+      1136,
+      1035,
+      1208
+    ],
+    "outside_rectangle_changed_pixels": 0
+  },
+  "model": "built-in image_gen",
+  "visual_review_required": false,
+  "unmet_visual_requirements": [],
+  "visual_review": "Opened final PNG and JPEG; five digits on each inherited hand, no new hands or text; no unmet requirement observed. Local judgment only."
+}

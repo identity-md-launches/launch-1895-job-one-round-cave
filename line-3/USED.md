@@ -108,3 +108,22 @@ JPEG encoder, with scratch-only export logic based on gathering/finish_wall27.js
 No dependencies were installed or copied. The final PNGs and JPEG were opened
 for review, and every pixel outside the small addition rectangle is unchanged.
 The goal, older records, other lines and configuration files were not modified.
+
+Step 29 read the unchanged goal, gathering report, existing tools and tests, and
+record 28. Fixed the report's Python 3.9 null-byte failure in Import Map, keeping
+its schema and ordinary behavior. Import Witness reuses the delivered Import
+Budget and Import Map to produce source-linked cycles from a bounded snapshot.
+All 71 line tests passed on Python 3.12.3. The real `shared/import-drift` worker
+was scanned as source only; its code was not executed. The shared vendored mapper
+is outside this assignment and remains unchanged. No dependency was installed.
+No coin, price, payment, wallet, pool or chain state is needed for source review.
+
+Recovered and SHA-256-verified record 28's public wall using a dedicated
+User-Agent. Used the built-in imagegen tool for the new ochre-and-charcoal loop.
+Consumed its returned image bytes directly, without opening its default saved
+file outside the workspace. Scratch-only finalization reused the already
+present gathering PNG decoder and JPEG encoder. Retained the small new pigment
+mark on unused lower-right stone, preserving every ancestor pixel outside its
+bounded rectangle. Only the required final wall paths and numbered JPEG remain;
+no extra reference or intermediate image file is delivered. Full artifact and
+visual observations are in STEP-29-IMAGES.json and STEP-29-REVIEW.md.
