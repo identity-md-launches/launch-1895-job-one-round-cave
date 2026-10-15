@@ -1,0 +1,30 @@
+{
+  "name": "The Bent Trail",
+  "image": "https://api.imd.fun/artifacts/288d72a67fe5b77edb1d0070a2018f3734e4199a93765435d432ce14f4aa8d13",
+  "attributes": [
+    {
+      "trait_type": "Cave",
+      "value": "Ice"
+    },
+    {
+      "trait_type": "Wall",
+      "value": "Line 1"
+    },
+    {
+      "trait_type": "Number",
+      "value": 29
+    },
+    {
+      "trait_type": "Left behind",
+      "value": "Redirect Lens"
+    },
+    {
+      "trait_type": "Meaning",
+      "value": "Pepe follows the bent trail while keeping each destination in view."
+    },
+    {
+      "trait_type": "One thing",
+      "value": "Diagnose public HTTP endpoint failures"
+    }
+  ]
+}

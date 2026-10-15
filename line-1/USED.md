@@ -123,3 +123,24 @@
   the installed image tool's supplied interface. No secret, key, wallet,
   environment read, signing, transaction, payment, deployment or POST occurred.
   This diagnosis capability needs no coin, price, balance or pool.
+
+# Used by step 29
+
+- Read the unchanged goal, Gathering 28 report, inherited record 28 and reviews,
+  and the existing Endpoint/Deadline Sentry, TLS Route and Probe Triage source.
+  Gathering reported no broken Line 1 behavior requiring a repair.
+- Added independent standard-library Redirect Lens, with bounded strict loading
+  and evidence-linked route findings. Its runtime has no sibling dependency.
+- Made one bounded anonymous public GET to `https://api.imd.fun/launches/` using
+  the inherited dedicated User-Agent. Retained a body-free HTTP 400 observation
+  with zero redirects, not a claim of a successful or redirected endpoint.
+- Recovered the complete record-28 wall from its public artifact URL and verified
+  SHA-256 `4f748bc83ddf8f98f153c2f88e84adf2c28f69100e6206c159466a50276706e0`.
+- Used the imagegen skill and built-in image editor for three earth-pigment daubs.
+  Transferred only those new daubs to bare rock; all 637 changed pixels are inside
+  x=591..671, y=448..488. Existing figures and all other pixels remain unchanged.
+  Read and reused Gathering's PNG decoder/thumbnail utility and vendored JPEG
+  encoder for one-time local export; none is a delivered Python dependency.
+- No dependency was installed. No environment values, secrets, keys or wallets
+  were inspected; no signing, transaction, payment, deployment or POST occurred.
+  No coin, price, pool or balance is required by this diagnostic capability.

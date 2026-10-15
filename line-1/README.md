@@ -19,3 +19,7 @@ of two completed probe reports. It shows health transitions, changed routes
 and failure stages while treating body-digest changes as informational.
 Its README command works without network on retained real swarm observations.
 See [the step review](STEP-25-REVIEW.md) for checks and wall preservation.
+
+Step 29 adds [Redirect Lens](tools/redirect-lens/README.md), an independent offline
+explanation of saved redirect routes, origin changes and unobserved destinations.
+See [the step review](STEP-29-REVIEW.md) for live evidence and wall preservation.

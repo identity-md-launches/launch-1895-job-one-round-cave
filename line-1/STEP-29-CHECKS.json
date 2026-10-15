@@ -1,0 +1,60 @@
+{
+  "number": 29,
+  "ancestor_sha256": "4f748bc83ddf8f98f153c2f88e84adf2c28f69100e6206c159466a50276706e0",
+  "generated_sha256": "99dfb26314a6b5c88261394230cf6df4b7c70473451d1a01367db070a84c7ae3",
+  "png": {
+    "paths": [
+      "artifacts/line-1/wall-v9.png",
+      "artifacts/line-1/wall.png"
+    ],
+    "format": "PNG",
+    "mode": "RGB",
+    "dimensions": [
+      1254,
+      1254
+    ],
+    "bytes": 4021168,
+    "sha256": "288d72a67fe5b77edb1d0070a2018f3734e4199a93765435d432ce14f4aa8d13"
+  },
+  "jpeg": {
+    "path": "dist/line-1/29.jpg",
+    "format": "JPEG",
+    "dimensions": [
+      512,
+      512
+    ],
+    "bytes": 63099,
+    "sha256": "4f21e4c0b1bd3c55e0ac6ef8192000e64ab13e140ee09d67399d7e2cc79d3ae1"
+  },
+  "preservation": {
+    "changed_pixels": 637,
+    "changed_bounds": [
+      591,
+      448,
+      671,
+      488
+    ],
+    "outside_addition_changed_pixels": 0
+  },
+  "visual_review": "Final PNG and JPEG reviewed after export; see STEP-29-REVIEW.md.",
+  "unmet_visual_requirements": [
+    "Inherited tiny hands do not resolve individual digits clearly enough to confirm five on each; no new hands or handprints added."
+  ],
+  "verification": {
+    "tests": {
+      "command": "python3 -B -m unittest discover -s line-1/tools/redirect-lens -v",
+      "exit_code": 0,
+      "tests_passed": 16,
+      "output": "test_cli_offline (test_redirect_lens.RedirectTests.test_cli_offline) ... ok\ntest_cross_origin (test_redirect_lens.RedirectTests.test_cross_origin) ... ok\ntest_exact_loop (test_redirect_lens.RedirectTests.test_exact_loop) ... ok\ntest_failed_status_can_be_captured (test_redirect_lens.RedirectTests.test_failed_status_can_be_captured) ... ok\ntest_inconsistent_chain (test_redirect_lens.RedirectTests.test_inconsistent_chain) ... ok\ntest_inconsistent_wrapper (test_redirect_lens.RedirectTests.test_inconsistent_wrapper) ... ok\ntest_limit_does_not_invent_location (test_redirect_lens.RedirectTests.test_limit_does_not_invent_location) ... ok\ntest_live_receipt_offline (test_redirect_lens.RedirectTests.test_live_receipt_offline) ... ok\ntest_no_headers (test_redirect_lens.RedirectTests.test_no_headers) ... ok\ntest_origin_normalization (test_redirect_lens.RedirectTests.test_origin_normalization) ... ok\ntest_outside_workspace_refused_before_open (test_redirect_lens.RedirectTests.test_outside_workspace_refused_before_open) ... ok\ntest_same_origin (test_redirect_lens.RedirectTests.test_same_origin) ... ok\ntest_strict_bounded_loader (test_redirect_lens.RedirectTests.test_strict_bounded_loader) ... ok\ntest_success_requires_final (test_redirect_lens.RedirectTests.test_success_requires_final) ... ok\ntest_url_refusals (test_redirect_lens.RedirectTests.test_url_refusals) ... ok\ntest_wrapper_pointers (test_redirect_lens.RedirectTests.test_wrapper_pointers) ... ok\n\n----------------------------------------------------------------------\nRan 16 tests in 0.070s\n\nOK\n"
+    },
+    "record_shape": "passed",
+    "record_count": 29,
+    "older_tracked_files": "unchanged except line-1/README.md and line-1/USED.md",
+    "goal": "byte-identical to HEAD",
+    "new_files_under_100000_bytes_outside_artifacts": true,
+    "jpeg_header_dimensions": [
+      512,
+      512
+    ]
+  }
+}
