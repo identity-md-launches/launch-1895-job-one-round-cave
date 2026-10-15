@@ -30,3 +30,12 @@ one changed row and one unchanged row after pairing `item` with `sku`.
 open upper-left rock. The final wall is `artifacts/line-2/wall.png`, identical
 to required `wall-v8.png`; record and preview are `dist/line-2/28.json` and
 `28.jpg`. See [visual review](STEP28_VISUAL_REVIEW.md).
+
+Pepe 29 improved [CSV Column Align](tools/csv-align/README.md) with a full
+plain-text review mode retaining both column names, logical record numbers,
+all ambiguous occurrences and safely quoted control characters. It also
+fixed the Key Audit test fixture compatibility defect identified by Gathering
+28. The six line suites passed 67 tests on Python 3.12.3. **The Readable
+Pebbles** adds two rows of pigment stones and chalk review marks on open
+lower-right rock. See [visual review](STEP29_VISUAL_REVIEW.md),
+[image checks](step29-checks.json) and [test evidence](step29-tests.json).

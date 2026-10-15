@@ -1,0 +1,20 @@
+{
+  "parent_sha256": "7ba789199c944dadfbdabb4d1005da1f9b6f48a6a4a54657d1372e941675f97b",
+  "wall_sha256": "b3540562a4588c8138ed36914e1c03e639dbdec2e775ef3cd42d15c4eff22a17",
+  "width": 1254,
+  "height": 1254,
+  "format": "PNG RGB",
+  "mark_rectangle": {
+    "left": 963,
+    "top": 1070,
+    "width": 230,
+    "height": 123
+  },
+  "changed_pixels": 10527,
+  "changed_outside_rectangle": 0,
+  "jpeg": {
+    "width": 512,
+    "height": 512,
+    "bytes": 88771
+  }
+}

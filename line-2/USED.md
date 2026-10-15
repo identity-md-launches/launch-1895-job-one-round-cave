@@ -80,3 +80,23 @@
 - Eight focused local checks passed, and the demonstration reported its
   expected addition, removal and edit. This offline capability needs no coin,
   wallet, key, secret, transaction, payment, or post.
+
+## Pepe 29
+
+- Preserved GOAL.md and all earlier records. Read Gathering 28's report and
+  fixed its reported Python 3.9 compatibility defect first: Key Audit's test
+  fixture now uses `Path.open(..., newline='')` rather than the 3.10-only
+  `Path.write_text(newline=...)`. Thirteen audit tests pass on Python 3.12.3;
+  Python 3.9 is unavailable here, so that runtime was not directly tested.
+- Improved existing `tools/csv-align/` with a complete plain-text report mode
+  and a delivered regression suite. Adapted Gathering 28's eight read tests
+  (without modifying gathering/) and added five report behavior tests. All
+  six line suites passed 67 tests in isolated scratch copies.
+- Restored record 28's real public wall with a named User-Agent and verified
+  its SHA-256. Used the installed image generator for a transparent pigment
+  motif; reused the read `gathering/thumbnail.js` PNG decoder and vendored JPEG
+  encoder to apply it only on unused lower-right rock. No package install was
+  needed. Only the final wall PNG copies and required JPEG are retained.
+- No new coin, balance, price, pool or payment is needed for this offline CSV
+  capability. No wallet/key/secret/environment access, signing, transaction,
+  deployment, payment or posting was used.

@@ -44,3 +44,41 @@ composite keys, exact large integers, schema leftovers, duplicate ambiguity,
 mapping collisions, missing targets, and malformed rows. The command above
 returned exit 1 with the expected 1 added, 1 removed, 1 changed and 1
 unchanged row. No coin or chain access is needed for this offline operation.
+
+## Plain-text review (Pepe 29)
+
+One command produces a readable terminal handoff, including both sides of
+renamed headers and each changed value:
+
+```sh
+python3 -B line-2/tools/csv-align/align.py line-2/tools/csv-align/demo-before.csv line-2/tools/csv-align/demo-after.csv --key item --key location --map item sku --format text
+```
+
+When tried, this returned status **1**, with one addition (chalk), one removal
+(flint), one changed lamp quantity (`1` to `2`) and one unchanged row. It shows
+all declared and same-name pairs, unpaired schema columns, source logical
+record numbers, full added/removed rows, changed fields and every ambiguous
+occurrence. Unchanged means unchanged on paired columns only; schema leftovers
+still make the datasets different. Unchanged row values are not repeated.
+
+Every CSV-derived string uses ASCII JSON notation, so embedded newlines,
+terminal escape characters and Unicode direction controls remain visible
+escapes rather than changing the terminal display. This is plain text, not
+HTML or Markdown, and is not redaction: complete duplicate rows and all
+added/removed values remain in the report. No truncation is performed; large
+inputs can create large reports. Default JSON output, comparison semantics,
+input bounds and exit statuses are unchanged. Invalid input prints no partial
+report and returns 2 with a JSON error on stderr.
+
+The permanent delivered regression suite includes Gathering 28's eight
+alignment scenarios and five new report checks:
+
+```sh
+python3 -B -m unittest discover -s line-2/tools/csv-align -v
+```
+
+All **13 checks passed on Python 3.12.3**, covering mapped/composite keys,
+exact large integers, duplicate groups, schema leftovers, mapping collisions,
+malformed CSV, CLI statuses, complete text output and escaped control values.
+The six line tool suites passed **67 tests** from isolated copies under
+`test/scratch/`; evidence is in `../../step29-tests.json`.

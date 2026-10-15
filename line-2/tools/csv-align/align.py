@@ -104,6 +104,51 @@ def reconcile_aligned(before, after, keys, maps=()):
     }
 
 
+def render_text(result):
+    """Plain terminal text; JSON-quote every CSV-derived value and control."""
+    def literal(value):
+        return json.dumps(value, ensure_ascii=True)
+
+    summary = result['summary']
+    lines = ['CSV column alignment: ' + ('equal' if result['equal'] else 'different'),
+             'Complete: ' + ('yes' if result['complete'] else 'no; duplicate keys remain unresolved'),
+             'Row counts: ' + literal(summary),
+             'Unchanged counts apply only to paired columns; inspect schema leftovers.',
+             '', 'Key pairs (before -> after):']
+    for pair in result['keys']:
+        lines.append('  ' + literal(pair['before']) + ' -> ' + literal(pair['after']))
+    lines.extend(['', 'Column pairs (before -> after):'])
+    for pair in result['schema']['paired_columns']:
+        mode = 'explicit' if pair['explicit'] else 'same name'
+        lines.append('  ' + literal(pair['before']) + ' -> ' + literal(pair['after']) + ' (' + mode + ')')
+    lines.extend([
+        'Unpaired before columns: ' + literal(result['schema']['removed_before_columns']),
+        'Unpaired after columns: ' + literal(result['schema']['added_after_columns']),
+    ])
+    for title, name in [('Added rows', 'added'), ('Removed rows', 'removed'),
+                        ('Changed rows', 'changed'), ('Ambiguous keys (never paired)', 'ambiguous')]:
+        lines.extend(['', title + ':'])
+        if not result[name]:
+            lines.append('  None.')
+        for row in result[name]:
+            lines.append('  Key ' + literal(row['key']))
+            if name in ('added', 'removed'):
+                side = 'after' if name == 'added' else 'before'
+                lines.append('    ' + side + ' record ' + str(row[side + '_record']) + ': ' +
+                             literal(row[side + '_values']))
+            elif name == 'changed':
+                lines.append('    Records: before ' + str(row['before_record']) +
+                             ', after ' + str(row['after_record']))
+                for field in row['fields']:
+                    lines.append('    ' + literal(field['before_column']) + ' -> ' +
+                                 literal(field['after_column']) + ': ' + literal(field['before']) +
+                                 ' -> ' + literal(field['after']))
+            else:
+                lines.append('    Before: ' + literal(row['before']))
+                lines.append('    After: ' + literal(row['after']))
+    return '\n'.join(lines)
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('before', help='baseline CSV inside the current directory')
@@ -113,13 +158,16 @@ def main(argv=None):
     parser.add_argument('--map', nargs=2, action='append', default=[],
                         metavar=('BEFORE', 'AFTER'),
                         help='explicitly pair differently named columns; repeat as needed')
+    parser.add_argument('--format', choices=('json', 'text'), default='json',
+                        help='JSON or a full, plain-text review with JSON-quoted values')
     args = parser.parse_args(argv)
     try:
         result = reconcile_aligned(args.before, args.after, args.key, args.map)
     except (InputError, OSError, ValueError, TypeError) as exc:
         print(json.dumps({'error': str(exc)}, ensure_ascii=False), file=sys.stderr)
         return 2
-    print(json.dumps(result, ensure_ascii=False, indent=2))
+    print(render_text(result) if args.format == 'text' else
+          json.dumps(result, ensure_ascii=False, indent=2))
     return 0 if result['equal'] else 1
 
 

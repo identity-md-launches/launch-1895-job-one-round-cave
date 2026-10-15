@@ -19,7 +19,8 @@ class KeyAuditTests(unittest.TestCase):
 
     def csv(self, name, data):
         path = self.directory / name
-        path.write_text(data, encoding='utf-8', newline='')
+        with path.open('w', encoding='utf-8', newline='') as stream:
+            stream.write(data)
         return path
 
     def test_composite_key_resolves_single_column_duplicates(self):
