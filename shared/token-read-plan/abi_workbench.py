@@ -90,19 +90,27 @@ def canonical(param):
     t = param.get('type', '')
     if not isinstance(t, str):
         raise ValueError('ABI parameter type must be a string')
-    if t.startswith('tuple'):
-        raise ValueError('tuple types are not supported in this compact tool')
     array = re.fullmatch(r'(.+)\[([0-9]*)\]', t)
     if array:
         base, count = array.groups()
         # This step supports one-dimensional arrays of static scalar elements.
-        if '[' in base or base in ('string', 'bytes'):
+        if '[' in base or base in ('string', 'bytes') or base == 'tuple':
             raise ValueError(f'unsupported ABI type: {t!r}')
         base = canonical({'type': base})
         if count:
             if len(count) > 4 or count[0] == '0' or not 1 <= int(count) <= MAX_ARRAY_ITEMS:
                 raise ValueError(f'array length must be 1..{MAX_ARRAY_ITEMS}')
         return base + '[' + count + ']'
+    if t == 'tuple':
+        components = param.get('components')
+        if not isinstance(components, list):
+            raise ValueError('tuple types require a components array')
+        check_params(components)
+        if not components:
+            raise ValueError('tuple types must have at least one component')
+        return '(' + ','.join(canonical(component) for component in components) + ')'
+    if t.startswith('tuple'):
+        raise ValueError(f'unsupported ABI type: {t!r}')
     if not re.fullmatch(r'(address|bool|string|bytes|bytes(?:[1-9]|[12][0-9]|3[0-2])|u?int(?:8|16|24|32|40|48|56|64|72|80|88|96|104|112|120|128|136|144|152|160|168|176|184|192|200|208|216|224|232|240|248|256)?)', t):
         raise ValueError(f'unsupported ABI type: {t!r}')
     return {'uint': 'uint256', 'int': 'int256'}.get(t, t)
@@ -112,19 +120,34 @@ def array_parts(t):
     return (match.group(1), int(match.group(2)) if match.group(2) else None) if match else None
 
 def dynamic(t):
-    parts = array_parts(t)
-    return t in ('string', 'bytes') or (parts is not None and parts[1] is None)
+    if isinstance(t, dict) and t.get('type') == 'tuple':
+        components = t.get('components')
+        if not isinstance(components, list):
+            raise ValueError('tuple types require a components array')
+        canonical(t)
+        return any(dynamic(component) for component in components)
+    text = canonical(t) if isinstance(t, dict) else t
+    parts = array_parts(text)
+    return text in ('string', 'bytes') or (parts is not None and parts[1] is None)
 
 def head_words(t):
-    parts = array_parts(t)
-    return 1 if dynamic(t) else (parts[1] if parts else 1)
+    if dynamic(t): return 1
+    if isinstance(t, dict) and t.get('type') == 'tuple':
+        return sum(head_words(component) for component in t['components'])
+    parts = array_parts(canonical(t) if isinstance(t, dict) else t)
+    return parts[1] if parts else 1
 
 def word(n):
     if n < 0 or n >= 1 << 256: raise ValueError('ABI word is outside uint256 range')
     return n.to_bytes(32, 'big')
 
 def encode_value(t, value):
-    t = canonical({'type': t})
+    """Encode one value; tuple parameters are ABI objects with components."""
+    param = t if isinstance(t, dict) else {'type': t}
+    t = canonical(param)
+    if param.get('type') == 'tuple':
+        if not isinstance(value, list): raise ValueError('tuple argument must be a JSON array')
+        return encode_tuple(param['components'], value)
     parts = array_parts(t)
     if parts:
         base, count = parts
@@ -175,15 +198,15 @@ def encode_tuple(params, values):
     check_params(params)
     if len(params) != len(values): raise ValueError(f'expected {len(params)} arguments, received {len(values)}')
     types = [canonical(p) for p in params]
-    head_size = 32 * sum(head_words(t) for t in types)
+    head_size = 32 * sum(head_words(p) for p in params)
     check_budget(head_size, 'ABI head')
     head, tail = bytearray(), bytearray()
-    for t, v in zip(types, values):
-        if dynamic(t):
-            encoded = encode_value(t, v)
+    for p, t, v in zip(params, types, values):
+        if dynamic(p):
+            encoded = encode_value(p, v)
             check_budget(head_size + len(tail) + len(encoded), 'encoded tuple')
             head.extend(word(head_size + len(tail))); tail.extend(encoded)
-        else: head.extend(encode_value(t, v))
+        else: head.extend(encode_value(p, v))
     return bytes(head + tail)
 
 def decode_scalar(t, w):
@@ -207,7 +230,7 @@ def decode_scalar(t, w):
         val=n
     return val
 
-def decode_tuple(params, data, *, strict=False, kind='return'):
+def decode_tuple(params, data, *, strict=False, kind='return', _budget=None, _charge_head=True):
     """Decode supported outputs; strict mode requires their canonical encoding.
 
     Re-encoding also detects aliasing, gaps, reordered/overlapping tails and
@@ -218,20 +241,29 @@ def decode_tuple(params, data, *, strict=False, kind='return'):
     subject = 'calldata' if kind == 'call' else 'return data'
     if len(data) % 32: raise ValueError(f'{subject} must be whole 32-byte words')
     types = [canonical(p) for p in params]
-    head_size = 32 * sum(head_words(t) for t in types)
+    head_size = 32 * sum(head_words(p) for p in params)
     if len(data) < head_size: raise ValueError(f'{subject} is shorter than the ABI head')
     # Charge each referenced tail separately, including aliases in permissive mode.
-    footprint = head_size
-    check_budget(footprint, 'decoded tuple')
+    if _budget is None: _budget = [0]
+    if _charge_head: _budget[0] += head_size
+    check_budget(_budget[0], 'decoded tuple')
     out=[]; pos=0
     for i,(p,t) in enumerate(zip(params, types)):
         parts = array_parts(t)
-        if dynamic(t):
+        if p.get('type') == 'tuple':
+            if dynamic(p):
+                off=int.from_bytes(data[pos:pos+32],'big')
+                if off < head_size or off%32 or off+32>len(data): raise ValueError(f'invalid dynamic {subject} offset')
+                nested=decode_tuple(p['components'],data[off:],kind=kind,_budget=_budget)
+            else:
+                nested=decode_tuple(p['components'],data[pos:],kind=kind,_budget=_budget,_charge_head=False)
+            val=[item['value'] for item in nested]
+        elif dynamic(p):
             off=int.from_bytes(data[pos:pos+32],'big')
             if off < head_size or off%32 or off+32>len(data): raise ValueError(f'invalid dynamic {subject} offset')
             n=int.from_bytes(data[off:off+32],'big')
-            footprint += 32 + (32*n if parts else n + (-n) % 32)
-            check_budget(footprint, 'decoded tuple')
+            _budget[0] += 32 + (32*n if parts else n + (-n) % 32)
+            check_budget(_budget[0], 'decoded tuple')
             if parts:
                 if n > MAX_ARRAY_ITEMS: raise ValueError(f'array exceeds {MAX_ARRAY_ITEMS} items')
                 end = off + 32 + 32*n
@@ -251,7 +283,7 @@ def decode_tuple(params, data, *, strict=False, kind='return'):
         else:
             val=decode_scalar(t, data[pos:pos+32])
         out.append({'name':p.get('name') or f'arg{i}', 'type':t, 'value':val})
-        pos += 32 * head_words(t)
+        pos += 32 * head_words(p)
     if strict and encode_tuple(params, [item['value'] for item in out]) != data:
         raise ValueError(f'noncanonical {subject}: strict mode requires exact re-encoding')
     return out
@@ -297,19 +329,60 @@ def validate_abi(abi):
                     raise ValueError(f'ABI entry {i} {field}[{j}] name must be a string')
     return abi
 
+def split_reference_types(text):
+    """Split a signature's types at commas outside nested tuple parentheses."""
+    if not text: return []
+    parts=[]; start=0; depth=0
+    for i,char in enumerate(text):
+        if char == '(': depth += 1
+        elif char == ')':
+            depth -= 1
+            if depth < 0: raise ValueError('unbalanced tuple type in function signature')
+        elif char == ',' and depth == 0:
+            if i == start: raise ValueError('empty type in function signature')
+            parts.append(text[start:i]); start=i+1
+    if depth or start == len(text): raise ValueError('unbalanced or empty type in function signature')
+    parts.append(text[start:])
+    return parts
+
+def canonical_reference_type(text):
+    if text.startswith('('):
+        depth=0; end=None
+        for i,char in enumerate(text):
+            if char == '(': depth += 1
+            elif char == ')':
+                depth -= 1
+                if depth == 0:
+                    end=i; break
+        if end != len(text)-1:
+            raise ValueError('tuple signature types cannot have array suffixes')
+        inner=text[1:-1]
+        if not inner: raise ValueError('tuple signature type must have components')
+        return '('+','.join(canonical_reference_type(t) for t in split_reference_types(inner))+')'
+    if '(' in text or ')' in text:
+        raise ValueError('malformed tuple type in function signature')
+    return canonical({'type':text})
+
 def function_reference(reference):
     """Return (name, canonical signature or None), without guessing overloads."""
     if not isinstance(reference, str) or len(reference) > MAX_FUNCTION_REFERENCE:
         raise ValueError(f'function reference must be at most {MAX_FUNCTION_REFERENCE} characters')
     if re.fullmatch(r'[A-Za-z_$][A-Za-z0-9_$]*', reference):
         return reference, None
-    match = re.fullmatch(r'([A-Za-z_$][A-Za-z0-9_$]*)\(([^()]*)\)', reference)
+    match = re.match(r'([A-Za-z_$][A-Za-z0-9_$]*)\(', reference)
     if not match:
         raise ValueError('function must be a name or a signature such as transfer(address,uint256), without spaces')
-    name, arguments = match.groups()
-    types = arguments.split(',') if arguments else []
+    name=match.group(1); start=match.end(); depth=1; end=None
+    for i in range(start,len(reference)):
+        if reference[i]=='(': depth+=1
+        elif reference[i]==')':
+            depth-=1
+            if depth==0: end=i; break
+    if end != len(reference)-1:
+        raise ValueError('malformed function signature')
+    types = split_reference_types(reference[start:end])
     check_params(types)
-    signature = name + '(' + ','.join(canonical({'type': t}) for t in types) + ')'
+    signature = name + '(' + ','.join(canonical_reference_type(t) for t in types) + ')'
     return name, signature
 
 def input_signature(fn):

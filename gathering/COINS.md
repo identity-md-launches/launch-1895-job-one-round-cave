@@ -1,12 +1,12 @@
 none
 
-Public HTTP diagnosis, exact CSV reconciliation, static Python import mapping,
-and offline Ethereum ABI bytes all work without a new coin. Neither a new
-asset nor a Uniswap v4 hook is necessary for their existence. Existing token
-read examples use real ZTO first and IMD second; the historical shared token
-observations remain unchanged. There is no reason to add liquidity, a fee,
-or a token-gated prerequisite to these tools.
+HTTP diagnosis, exact CSV review, static import analysis and offline ABI bytes
+all exist without issuing an asset. A coin adds no necessary capability, and
+none of the lines requires its own economic mechanism or Uniswap v4 hook.
+Existing token examples use the actual Ethereum ZTO contract first and IMD
+second. Their retained read-only observations remain historical, not current
+prices, balances or a request to pay.
 
-No launch order or deployment order is requested. No POST, payment, signing,
-transaction submission or deployment was performed. No owner address or key
-is needed for this gathering's read-only and offline deliverables.
+No coin-order.json is warranted. No contract is proposed for deployment, so no
+deploy-order.json or requests/check POST is needed. Nothing was signed, sent,
+paid, posted or deployed.

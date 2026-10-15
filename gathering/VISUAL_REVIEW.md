@@ -1,32 +1,21 @@
-# Explicit final review — Gathering 28
+# Gathering 29 visual review
 
-Opened the final full-size PNG and 512 px JPEG with the image viewer after
-export. The edit target was Gathering 27's actual artifact, downloaded from
-its record and checked against SHA-256 before exporting this round.
+Opened the finished 1254 × 1254 RGB PNG and its 512 × 512 JPEG after export.
+The supplied ancestor was also opened before editing. Local visual judgment:
 
-- PNG: square 1254 × 1254 RGB, opaque, original size and framing retained.
-- JPEG: 512 × 512, valid JPEG, 67,245 bytes.
-- Main figure remains Pepe: heavy-lidded large eyes, wide mouth, charcoal and
-  ochre marks on the inherited warm rough stone.
-- Upper visible hand: four fingers plus a raised thumb, five digits total.
-  Lower visible hand: four fingers plus a raised thumb, five digits total.
-  Both are pixel-identical to the ancestors. No hand or stencil was added.
-- New mark: small worn woven sieve holding stones, below the inherited bridge
-  and left of the previous charcoal ring. It is intentionally faint and loses
-  detail in the 512 px preview, while remaining visible at full resolution.
-- Every existing mark is outside the addition rectangle. Zero pixels changed
-  outside x=544..664, y=972..1046. The 2,151 changed pixels are new pigment
-  blended with stone inside that box; exact original rock is not claimed for
-  those pixels. Original rock, cracks, colors, light and framing remain
-  untouched elsewhere. No ancestral mark was erased, moved or redrawn.
-- No letters, numbers, captions, signatures, logos, watermarks, borders or
-  frames were added or observed. No real people, political/hateful symbols,
-  photographic subject or 3D object was introduced. Existing cave texture
-  and earth-pigment style were retained.
+- The recognizable heavy-lidded, wide-mouthed Pepe remains the main figure.
+- Both inherited hands have five digits: four fingers and one thumb each.
+  No new hand or stencil was added.
+- The new mark is three red ochre pebble dabs linked by a rough closed charcoal
+  trail on bare rock right of the old bridge. It is modest but visible in the
+  512 px preview. Pigment follows the existing rock grain.
+- No letters, numbers, captions, signature, logo, watermark, border or frame
+  were added. No people, political or hateful symbols appear.
+- Warm torchlight, cracks, stone, framing, square size and all ancestor marks
+  remain. Pixel comparison confirms zero changes outside the empty-rock patch.
+- No unmet visual requirement observed. The small motif is deliberately worn;
+  miniatures in the gallery do not retain its full detail.
 
-Unmet visual requirements observed: **none**. This is explicit visual judgment,
-not independent certification. The model's full edited background was not
-used: only its new pigment was masked and transferred. The full prompt and
-method are in [IMAGE_PROMPT.md](IMAGE_PROMPT.md). Dimensions, format, sizes,
-hashes and changed-pixel counts are in [image-checks28.json](image-checks28.json).
-Both output wall paths have identical bytes.
+This review does not independently certify compliance. Dimensions and valid
+PNG/JPEG structure were separately confirmed with the image inspector and the
+offline delivery checker; exact preservation statistics are in image-checks29.json.

@@ -1,0 +1,3 @@
+anchor,from,to,component,sites
+pkg.engine,pkg.engine,pkg.helper,"[""pkg.engine"",""pkg.helper""]","[{""line"":1,""path"":""pkg/engine.py"",""source_sha256"":""42c27749f8d15f04c51c63ce3f501ee4844dcd71f325c45a98dca1922fc4f9e0"",""target"":"". import helper""}]"
+pkg.engine,pkg.helper,pkg.engine,"[""pkg.engine"",""pkg.helper""]","[{""line"":1,""path"":""pkg/helper.py"",""source_sha256"":""a1281d6ae9cb33d7b377a5aec839510d7240e75087a426442d29de75c1eecd1c"",""target"":"". import engine""}]"

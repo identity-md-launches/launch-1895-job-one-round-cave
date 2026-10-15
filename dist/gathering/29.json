@@ -1,0 +1,30 @@
+{
+  "name": "The Witness Trail",
+  "image": "https://api.imd.fun/artifacts/97348774cd87ec6b7ec972b9915bda57b7c432c82129af13687f56f87653a080",
+  "attributes": [
+    {
+      "trait_type": "Cave",
+      "value": "Ice"
+    },
+    {
+      "trait_type": "Wall",
+      "value": "Gathering"
+    },
+    {
+      "trait_type": "Number",
+      "value": 29
+    },
+    {
+      "trait_type": "Left behind",
+      "value": "Cycle Witness CSV Review"
+    },
+    {
+      "trait_type": "Meaning",
+      "value": "Three ochre stones share one closed charcoal trail, making a hidden cycle visible."
+    },
+    {
+      "trait_type": "One thing",
+      "value": "Gathering"
+    }
+  ]
+}

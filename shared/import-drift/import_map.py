@@ -139,7 +139,11 @@ def inspect(root, *, source_bytes=None):
             source = (source_bytes[relative] if source_bytes is not None
                       else (root / relative).read_bytes())
             tree = ast.parse(source, filename=relative)
-        except (SyntaxError, UnicodeError) as exc:
+        except (SyntaxError, UnicodeError, ValueError) as exc:
+            # Python 3.9 reports null bytes as ValueError, newer versions as
+            # SyntaxError. Do not disguise unrelated ValueErrors as bad source.
+            if isinstance(exc, ValueError) and not isinstance(exc, UnicodeError) and b'\x00' not in source:
+                raise
             issues.append({"type": "parse_error", "path": relative, "line": getattr(exc, "lineno", None), "detail": str(exc)})
             continue
 

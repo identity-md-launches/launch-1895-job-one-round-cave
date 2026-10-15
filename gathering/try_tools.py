@@ -11,7 +11,7 @@ import sys
 
 
 def main():
-    scratch = Path('test/scratch/gathering28')
+    scratch = Path('test/scratch/gathering29')
     scratch.mkdir(parents=True, exist_ok=True)
     results = []
 
@@ -154,9 +154,37 @@ def main():
         ['shared/import-drift/observed-sentry23.csv', str(bounded_path), '--key', 'module'])
     run('Shared bounded collection refuses partial CSV', 'shared/import-drift/bounded_snapshot.py',
         ['line-1/tools/endpoint-sentry', '--max-files', '1'], 2)
+    run('Redirect Lens retained real failed status', 'line-1/tools/redirect-lens/redirect_lens.py',
+        ['line-1/tools/redirect-lens/observed-live.json'])
+    run('CSV renamed columns readable text', 'line-2/tools/csv-align/align.py',
+        ['line-2/tools/csv-align/demo-before.csv', 'line-2/tools/csv-align/demo-after.csv',
+         '--key', 'item', '--key', 'location', '--map', 'item', 'sku', '--format', 'text'], 1)
+    run('Import Witness actual worker source', 'line-3/tools/import-witness/witness.py',
+        ['shared/import-drift', '--json', '--strict'])
+    run('Import Witness directed fixture', 'line-3/tools/import-witness/witness.py',
+        ['line-3/tools/import-map/examples', '--json', '--strict'], 1)
+    run('Import Witness collection refusal', 'line-3/tools/import-witness/witness.py',
+        ['line-3/tools/import-map/examples', '--json', '--max-files', '1'], 2)
+    tuple_args = ['encode', '--abi', 'line-4/tools/abi-workbench/tuple-example.json',
+                  '--function', 'put((uint256,string))', '--args', '[[7,"hi"]]']
+    tuple_output = run('ABI nested tuple layout', abi, tuple_args)
+    run('ABI nested tuple canonical inspection', abi,
+        ['decode-call', '--abi', 'line-4/tools/abi-workbench/tuple-example.json',
+         '--function', 'put((uint256,string))', '--data', json.loads(tuple_output)['calldata']])
+    run('Shared tuple codec', 'shared/token-read-plan/abi_workbench.py', tuple_args)
+    cycle = run('Shared source-linked cycle CSV', 'shared/import-drift/cycle_csv.py',
+        ['snapshot', 'line-3/tools/import-map/examples'], 1)
+    cycle_path = scratch / 'cycles.csv'
+    cycle_path.write_text(cycle)
+    run('Shared cycle self-review', 'shared/import-drift/cycle_csv.py',
+        ['compare', str(cycle_path), str(cycle_path)])
+    run('Shared empty real-worker cycle export', 'shared/import-drift/cycle_csv.py',
+        ['snapshot', 'line-1/tools/deadline-sentry'])
+    run('Shared cycle budget refuses partial CSV', 'shared/import-drift/cycle_csv.py',
+        ['snapshot', 'line-3/tools/import-map/examples', '--max-files', '1'], 2)
     report = {'ok': all(item['passed'] for item in results), 'results': results,
               'token_historical_csv_byte_identical': True}
-    Path('gathering/integration-checks28.json').write_text(json.dumps(report, indent=2) + '\n')
+    Path('gathering/integration-checks29.json').write_text(json.dumps(report, indent=2) + '\n')
     print(json.dumps({'ok': report['ok'], 'checks': len(results),
                       'failed': [r['name'] for r in results if not r['passed']]}, indent=2))
     return 0 if report['ok'] else 1

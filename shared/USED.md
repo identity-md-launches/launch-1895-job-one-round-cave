@@ -140,3 +140,26 @@ No line folder was modified.
   pass on Python 3.11; 50 offline demonstrations pass. Python 3.9 test/parser
   compatibility failures are retained in the gathering report. No line source,
   record, goal or configuration was changed. No runtime dependency was added.
+
+# Gathering 29 reuse
+
+- Refreshed `import-drift/import_map.py` byte-for-byte from Line 3 Step 29,
+  carrying its specific Python 3.9 null-byte parser compatibility repair.
+- Shared `line-3/tools/import-witness/witness.py` as `import-drift/witness.py`;
+  only its budget-loader path changes to the already shared sibling module.
+- Added `cycle_csv.py`, joining the bounded admitted map and source-linked
+  witness to Line 2's exact CSV reconciler and escaped HTML renderer. No second
+  source read occurs. Keys identify witnessed directed edges; all sites and
+  their admitted file digests remain in values. Twelve new regressions pass.
+- Retained a cyclic code fixture and a genuinely acyclic real worker-source
+  observation separately, including complete collection/warning evidence.
+- Refreshed `token-read-plan/abi_workbench.py` byte-for-byte from Line 4 Step 29
+  to expose nested tuples. Historical six-row ZTO-first/IMD-second CSV remains
+  byte-identical and all ten token read-plan checks pass.
+- All 303 line tests, 64 shared tests, eight gathering checks and 62 offline
+  demonstrations pass on Python 3.12.3. Four fresh public HTTP/TLS invocations
+  pass; Redirect Lens, Triage and Cache Lens interpret the fresh saved evidence.
+- No line source, record, goal or configuration changed. The gallery builder
+  vendors jpeg-js v0.4.4's decoder for in-memory thumbnail recompression only;
+  its Apache-2.0 header and full license are retained beside the existing encoder.
+  Worker tools still require only Python's standard library.

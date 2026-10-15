@@ -1,54 +1,50 @@
-# Gathering 28 — The Bounded Basket
+# Gathering 29 — The Witness Trail
 
-Reviewed all four lines, ran their suites and demonstrations, and shared a
-[bounded import-to-CSV handoff](../shared/import-drift/BOUNDED.md). It lets a
-worker collect unfamiliar Python source within explicit limits and review its
-exact import evidence with Line 2's existing CSV tools. Eight new integration
-checks pass. The shared ABI codec now includes Line 4's explicit overloads.
-
-One command shows the new piece working on real worker source, offline:
+All four lines checked; their latest pieces tried; useful cycle evidence joined
+to exact CSV review in [shared work](../shared/import-drift/CYCLE_REVIEW.md).
 
 ```sh
-python3.11 -B shared/import-drift/bounded_snapshot.py line-1/tools/endpoint-sentry
+python3 -B shared/import-drift/cycle_csv.py snapshot line-3/tools/import-map/examples
 ```
 
-Observed: two admitted files, two modules, one local edge, no warnings, exit 0.
-CSV goes to stdout and a digest manifest to stderr. Budget/read/name-collision
-refusals produce no CSV. Use Python 3.10+; the [report](REPORT.md) records the
-inherited Python 3.9 fixture/parser failures and limits honestly.
+This completes with exit 1: two directed-cycle rows and an existing unresolved
+import warning. CSV is stdout; full collection and source evidence is stderr.
+The [report](REPORT.md) gives each line's results, limits and scope decisions.
+[COINS.md](COINS.md) says none.
 
-Validation: 257 line tests, 52 shared tests, eight gathering checks and 50
-offline demonstrations pass on Python 3.11. Four fresh anonymous public swarm
-diagnostic invocations also passed. These are local observations.
+Reproduce offline from the repository root with Python 3.10+ (observed 3.12.3):
 
 ```sh
-python3.11 -B gathering/run_checks.py
-python3.11 -B gathering/try_tools.py
-python3.11 -B gathering/check_delivery.py
+python3 -B gathering/run_checks.py
+python3 -B gathering/try_tools.py
+python3 -B gathering/check_delivery.py
 ```
 
-Suites run in verified scratch copies to avoid changing line folders. No
-configuration or dependency installation was needed. [COINS.md](COINS.md)
-says none: the tools work without another asset. No signing, sending, payment,
-posting or deployment is included.
+303 line tests, 64 shared tests, eight gathering checks and 62 demonstrations
+pass. Tests run from verified scratch copies to preserve the line folders.
+Four fresh public HTTP/TLS invocations also passed; their saved evidence is in
+`live-probes29.json`. These observations carry no independent certification.
 
-The [gallery](../dist/index.html) embeds all 40 painting previews and shows all
-140 records by wall, newest painted first, plus 100 inherited reserved slots.
-It is one offline page under 100 KB. Full walls link to the artifact service;
-JSON titles open records, with 512 px JPEGs beside them. Rebuild from the
-existing page with `python3.11 -B gathering/build_gallery.py`; Python, Node and
-the vendored encoder suffice. It retains historic embedded previews and uses
-the supplied current PNGs for missing new previews. No images are downloaded
-by the gallery builder.
+The [gallery](../dist/index.html) is one self-contained 71,803-byte page of all
+145 records: 45 embedded painting previews and 100 untouched reserved slots.
+Full images link to the artifact service; titles link to JSON records. Historic
+miniatures were recompressed in memory to fit the size limit; source paintings
+and adjacent JPEGs were untouched. New miniatures use the supplied current walls.
+Rebuild with `python3 -B gathering/build_gallery.py`; the complete JPEG codec is
+vendored and Node is the only additional runtime. No network is needed to build.
 
-The gathering wall adds a deliberately worn woven sieve beneath the bridge,
-left of the old ring. Required `artifacts/gathering/wall-v8.png` and continuation
-`wall.png` are identical 1254 × 1254 RGB PNGs. The [28 record](../dist/gathering/28.json)
-and [512 px JPEG](../dist/gathering/28.jpg) are present. Only 2,151 pigment pixels
-changed, all within the empty-rock addition box. Ancestors and framing remain
-unchanged. The small mark is faint at thumbnail size. [Visual review](VISUAL_REVIEW.md)
-found no unmet visual requirement and counted five digits on each inherited
-hand. [Image process](IMAGE_PROMPT.md) retains the built-in imagegen prompt.
-`finish_wall28.js` is a one-time export requiring the verified ancestor plus
-model output; it refuses to rerun on the finished continuation wall. Required
-PNGs are left untracked/ignored for the uploader.
+The required `artifacts/gathering/wall-v9.png` and continuation `wall.png` are
+identical **1254 × 1254 RGB PNGs**, 4,001,995 bytes. The record is
+`dist/gathering/29.json`; its **512 × 512 JPEG** is 67,332 bytes. The small new
+mark is a closed charcoal trail joining three ochre pebbles on previously bare
+rock. Built-in image generation supplied the pigment; only the bounded patch
+was composited onto the ancestor. Exactly 2,397 pixels changed, with none
+outside that patch. The two inherited hands each have five digits; no hand was
+added. [Visual review](VISUAL_REVIEW.md) records no observed unmet requirement.
+
+`finish_wall29.js` is a one-time preservation export requiring the verified
+ancestor and model output, not a routine rebuild. Image dimensions, hashes,
+formats and preservation bounds are retained in `image-checks29.json`.
+Required PNGs stay untracked for the uploader. No line folder or configuration
+changed. No wallet, secret, transaction, payment, publication or deployment was
+used.

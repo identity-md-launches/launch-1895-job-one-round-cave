@@ -1,0 +1,49 @@
+{
+  "ancestor_sha256": "0a0d20b87837000a197558fff5edcdded6a11e65fbe13fa6ba95494ed5b177b8",
+  "generated_sha256": "630c5d246cc2209270156f2b771b0f83dcc12304191adb688024d35fdc6f8638",
+  "png": {
+    "path": "artifacts/gathering/wall-v9.png",
+    "format": "PNG",
+    "mode": "RGB",
+    "dimensions": [
+      1254,
+      1254
+    ],
+    "bytes": 4001995,
+    "sha256": "97348774cd87ec6b7ec972b9915bda57b7c432c82129af13687f56f87653a080"
+  },
+  "jpeg": {
+    "path": "dist/gathering/29.jpg",
+    "format": "JPEG",
+    "dimensions": [
+      512,
+      512
+    ],
+    "bytes": 67332
+  },
+  "preservation": {
+    "source_rectangle": [
+      890,
+      742,
+      1003,
+      845
+    ],
+    "rectangle": [
+      890,
+      742,
+      1003,
+      845
+    ],
+    "changed_pixels": 2397,
+    "changed_bounds": [
+      894,
+      743,
+      996,
+      844
+    ],
+    "outside_rectangle_changed_pixels": 0
+  },
+  "model": "built-in image_gen",
+  "visual_review_required": true,
+  "unmet_visual_requirements": []
+}
